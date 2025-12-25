@@ -1,0 +1,647 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.page {
+    display: none;
+    min-height: 100vh;
+}
+
+.page.active {
+    display: block;
+}
+
+/* ===== Halaman Pilih Sektor ===== */
+#sectorSelectionPage {
+    background: linear-gradient(to bottom right, #4ade80, #10b981, #059669);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.background-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.pattern-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);
+}
+
+.calculator-mockup {
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+    transform: rotate(12deg);
+    opacity: 0.9;
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    width: 16rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+}
+
+.mockup-display {
+    background: linear-gradient(to bottom right, #059669, #047857);
+    color: white;
+    text-align: right;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.mockup-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.mockup-buttons button {
+    background: #f3f4f6;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: default;
+}
+
+.mockup-buttons button.yellow {
+    background: #fbbf24;
+}
+
+.mockup-buttons button.tall {
+    grid-row: span 2;
+}
+
+.mockup-buttons button.wide {
+    grid-column: span 2;
+}
+
+.icon {
+    position: absolute;
+    opacity: 0.1;
+    font-size: 6rem;
+    pointer-events: none;
+}
+
+.icon.wheat-1 {
+    top: 25%;
+    left: 2rem;
+    font-size: 8rem;
+}
+
+.icon.wheat-2 {
+    bottom: 33%;
+    right: 3rem;
+    font-size: 7rem;
+}
+
+.icon.sprout {
+    top: 66%;
+    left: 25%;
+}
+
+.container {
+    max-width: 72rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.header-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.header-section p {
+    font-size: 1.25rem;
+    color: rgba(255,255,255,0.9);
+}
+
+.sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.sectors-grid.single {
+    max-width: 400px;
+    margin-top: 1.5rem;
+}
+
+.sector-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sector-card:hover {
+    transform: translateY(-0.5rem) scale(1.05);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+}
+
+.sector-icon {
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+}
+
+.sector-card h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+}
+
+.sector-card p {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* ===== Halaman Kalkulator ===== */
+#calculatorPage {
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+#calculatorPage.pangan {
+    background: linear-gradient(to bottom right, #fbbf24, #f97316);
+}
+
+#calculatorPage.hortikultura {
+    background: linear-gradient(to bottom right, #4ade80, #059669);
+}
+
+#calculatorPage.peternakan {
+    background: linear-gradient(to bottom right, #f87171, #e11d48);
+}
+
+#calculatorPage.perkebunan {
+    background: linear-gradient(to bottom right, #2dd4bf, #0891b2);
+}
+
+.calc-container {
+    max-width: 64rem;
+    margin: 0 auto;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.back-button:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.calc-card {
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+
+.calc-header {
+    padding: 1.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.calc-header.pangan {
+    background: linear-gradient(to right, #fbbf24, #f97316);
+}
+
+.calc-header.hortikultura {
+    background: linear-gradient(to right, #4ade80, #059669);
+}
+
+.calc-header.peternakan {
+    background: linear-gradient(to right, #f87171, #e11d48);
+}
+
+.calc-header.perkebunan {
+    background: linear-gradient(to right, #2dd4bf, #0891b2);
+}
+
+.header-icon {
+    font-size: 3rem;
+}
+
+.calc-header h2 {
+    font-size: 1.875rem;
+    font-weight: bold;
+}
+
+.calc-header p {
+    color: rgba(255,255,255,0.9);
+}
+
+.calc-body {
+    padding: 2rem;
+}
+
+.form-section {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-section.pangan {
+    background: linear-gradient(to bottom right, #fef3c7, #fde68a);
+}
+
+.form-section.hortikultura {
+    background: linear-gradient(to bottom right, #dcfce7, #bbf7d0);
+}
+
+.form-section.peternakan {
+    background: linear-gradient(to bottom right, #fee2e2, #fecaca);
+}
+
+.form-section.perkebunan {
+    background: linear-gradient(to bottom right, #ccfbf1, #99f6e4);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 2px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+.button-group {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.btn-calculate {
+    flex: 1;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-calculate.pangan {
+    background: linear-gradient(to right, #fbbf24, #f97316);
+}
+
+.btn-calculate.hortikultura {
+    background: linear-gradient(to right, #4ade80, #059669);
+}
+
+.btn-calculate.peternakan {
+    background: linear-gradient(to right, #f87171, #e11d48);
+}
+
+.btn-calculate.perkebunan {
+    background: linear-gradient(to right, #2dd4bf, #0891b2);
+}
+
+.btn-calculate:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.btn-reset,
+.btn-reset-alt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #6b7280;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-reset:hover,
+.btn-reset-alt:hover {
+    background: #4b5563;
+}
+
+.btn-reset-alt {
+    background: linear-gradient(to right, #6b7280, #4b5563);
+}
+
+.btn-reset-alt:hover {
+    background: linear-gradient(to right, #4b5563, #374151);
+}
+
+.btn-copy {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(to right, #22d3ee, #3b82f6);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.btn-copy:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, #06b6d4, #2563eb);
+}
+
+/* Results Section */
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.results-header h3 {
+    font-size: 2.25rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #ec4899, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.results-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.gradient-line {
+    height: 4px;
+    background: linear-gradient(to right, #ec4899, #9333ea, #3b82f6);
+    border-radius: 9999px;
+    margin-bottom: 1.5rem;
+}
+
+.input-data-section {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    border: 2px solid #f3f4f6;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.section-title span {
+    font-size: 1.875rem;
+}
+
+.section-title h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.data-card {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border-left: 4px solid;
+}
+
+.data-card.green {
+    background: linear-gradient(to bottom right, #dcfce7, #bbf7d0);
+    border-color: #22c55e;
+}
+
+.data-card.blue {
+    background: linear-gradient(to bottom right, #dbeafe, #bfdbfe);
+    border-color: #3b82f6;
+}
+
+.data-card.purple {
+    background: linear-gradient(to bottom right, #f3e8ff, #e9d5ff);
+    border-color: #a855f7;
+}
+
+.data-card.yellow {
+    background: linear-gradient(to bottom right, #fef3c7, #fde68a);
+    border-color: #eab308;
+}
+
+.data-card.teal {
+    background: linear-gradient(to bottom right, #ccfbf1, #99f6e4);
+    border-color: #14b8a6;
+}
+
+.data-card.rose {
+    background: linear-gradient(to bottom right, #ffe4e6, #fecdd3);
+    border-color: #f43f5e;
+}
+
+.data-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+.data-value {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.result-data-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.result-box {
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    border: 2px solid;
+}
+
+.result-box.green {
+    background: linear-gradient(to bottom right, #dcfce7, #bbf7d0);
+    border-color: #86efac;
+}
+
+.result-box.blue {
+    background: linear-gradient(to bottom right, #dbeafe, #bfdbfe);
+    border-color: #93c5fd;
+}
+
+.result-item {
+    background: white;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border-left: 4px solid;
+    margin-bottom: 0.75rem;
+}
+
+.result-item:last-child {
+    margin-bottom: 0;
+}
+
+.result-item.green {
+    border-color: #22c55e;
+}
+
+.result-item.blue {
+    border-color: #3b82f6;
+}
+
+.result-item.highlight {
+    background: linear-gradient(to right, #22c55e, #10b981);
+    color: white;
+    padding: 1.25rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-label {
+    font-weight: 500;
+    color: #374151;
+}
+
+.result-item.highlight .result-label {
+    color: white;
+    font-size: 1.125rem;
+}
+
+.result-value {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #111827;
+}
+
+.result-value.green {
+    color: #15803d;
+}
+
+.result-value.blue {
+    color: #1e40af;
+}
+
+.result-item.highlight .result-value {
+    color: white;
+    font-size: 1.875rem;
+}
+
+.peternakan-results {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+    .header-section h1 {
+        font-size: 2rem;
+    }
+
+    .calculator-mockup {
+        display: none;
+    }
+
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .results-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .btn-copy,
+    .btn-reset-alt {
+        width: 100%;
+        justify-content: center;
+    }
+}
